@@ -6,11 +6,13 @@ public class MovimentoJogador : MonoBehaviour
 {
     private CharacterController controller;
     private Transform myCamera;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         myCamera = Camera.main.transform;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,5 +34,6 @@ public class MovimentoJogador : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movimento), Time.deltaTime * 10);
         }
         
+        animator.SetBool("Mover", movimento != Vector3.zero);
     }
 }
