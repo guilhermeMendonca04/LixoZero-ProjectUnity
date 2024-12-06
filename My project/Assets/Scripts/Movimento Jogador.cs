@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovimentoJogador : MonoBehaviour
 {
     private CharacterController controller;
+    public AudioSource source;
     private Transform myCamera;
     private Animator animator;
     // Start is called before the first frame update
@@ -28,10 +29,25 @@ public class MovimentoJogador : MonoBehaviour
 
         controller.Move(movimento * Time.deltaTime * 5);
         controller.Move(new Vector3(0, -9.81f, 0) * Time.deltaTime);
+        
 
         if(movimento != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movimento), Time.deltaTime * 10);
+
+             if (!source.isPlaying)
+            {
+                source.Play();
+            }
+        }
+
+        else
+        {
+            // Parar áudio quando o personagem para
+            if (source.isPlaying)
+            {
+                source.Pause();
+            }
         }
         
         animator.SetBool("Mover", movimento != Vector3.zero);
